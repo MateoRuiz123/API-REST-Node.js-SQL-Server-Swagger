@@ -18,7 +18,7 @@ router.route("/categorias").get(async (req, res) => {
     if (categorias.length === 0) {
       res.status(404).json({ message: "No se encontraron categorías" });
     } else {
-      res.json(categorias);
+      res.json(categorias); // Devolvemos todas las categorías
     }
   } catch (error) {
     console.error("Error al obtener categorías:", error);
@@ -32,7 +32,7 @@ router.route("/categorias/:id").get(async (req, res) => {
     if (categoria.length === 0) {
       res.status(404).json({ message: "No se encontró la categoría" });
     } else {
-      res.json(categoria[0]);
+      res.json(categoria[0]); // Devolvemos la primera categoría encontrada
     }
   } catch (error) {
     console.error("Error al obtener la categoría:", error);

@@ -5,9 +5,10 @@ async function getCategorias() {
   try {
     let pool = await sql.connect(config);
     let categorias = await pool.request().query("SELECT * FROM TM_CATEGORIAS");
-    return categorias.recordsets;
+    return categorias.recordset; // Ajustado a `recordset` en lugar de `recordsets`
   } catch (error) {
     console.log(error);
+    throw error; // Asegúrate de lanzar el error para que la ruta pueda manejarlo
   }
 }
 
@@ -18,9 +19,10 @@ async function getCategoriaPorId(id) {
       .request()
       .input("input_parameter", sql.Int, id)
       .query("SELECT * FROM TM_CATEGORIAS WHERE CAT_ID = @input_parameter");
-    return categoria.recordsets;
+    return categoria.recordset; // Ajustado a `recordset` en lugar de `recordsets`
   } catch (error) {
     console.log(error);
+    throw error; // Asegúrate de lanzar el error para que la ruta pueda manejarlo
   }
 }
 
