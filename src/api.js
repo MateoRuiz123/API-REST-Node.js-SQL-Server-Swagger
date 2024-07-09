@@ -1,4 +1,5 @@
 const dbcategorias = require("./controllers/dbcategoria.js");
+const Categoria = require("./models/categoria.js");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -37,6 +38,24 @@ router.route("/categorias/:id").get(async (req, res) => {
   } catch (error) {
     console.error("Error al obtener la categoría:", error);
     res.status(500).json({ message: "Error al obtener la categoría" });
+  }
+});
+
+router.route("/categorias").post(async (req, res) => {
+  try {
+    let newCategoria = new Categoria(
+      req.body.CAT_NOMBRE,
+      req.body.CAT_OBSERVACION
+    );
+    let result = await dbcategorias.insertCategoria(newCategoria);
+    if (result.length > 0) {
+      res.status(201).json({ message: "Categoría creada", data: result });
+    } else {
+      res.status(400).json({ message: "Error al crear la categoría" });
+    }
+  } catch (error) {
+    console.error("Error al crear la categoría:", error);
+    res.status(500).json({ message: "Error al crear la categoría" });
   }
 });
 

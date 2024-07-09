@@ -26,7 +26,24 @@ async function getCategoriaPorId(id) {
   }
 }
 
+async function insertCategoria(categoria) {
+  try {
+    let pool = await sql.connect(config);
+    let insert = await pool
+      .request()
+      .input("CAT_NOMBRE", sql.NVarChar, categoria.CAT_NOMBRE)
+      .input("CAT_OBSERVACION", sql.NVarChar, categoria.CAT_OBSERVACION)
+      .execute("SP_I_CATEGORIA01"); // Usar el procedimiento almacenado
+
+    return insert.recordset;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 module.exports = {
   getCategorias,
   getCategoriaPorId,
+  insertCategoria,
 };
